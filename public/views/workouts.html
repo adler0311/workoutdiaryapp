@@ -1,0 +1,73 @@
+<div class="well">
+	<form>
+		<div class="form-group col-md-12">
+	    	<label>날짜</label>
+	    	<input type="text" class="form-control" placeholder="날짜를 입력하세요" ng-model="workouts.date">
+	  	</div>
+	  	<div class="form-group">
+	    	<label>운동 부위</label>
+	    	<br>
+	  		<div class="col-md-11">
+		    	<select class="form-control" ng-model="workouts.part" name="" >
+					<option  value="{{part}}" ng-repeat="part in workouts.workoutPart">{{part}}</option>
+				</select>
+			</div>
+			<div  class="col-md-1"><button class="btn btn-primary" ng-click="workouts.showCategory(workouts.part)">선택</button></div>
+	  	</div>
+		<br>
+		<br>
+		
+		<div class="container" style="margin-left: -15px">
+		  	<div class="col-md-4" style="padding-left: 0" ng-repeat="item in workouts.partCategory">
+		  		<div ng-if="item != undifined">
+		  			{{item}}
+			  		<div ng-if="item != '유산소'">
+			  			<div class="col-md-6">
+				  			<input type="text" class="form-control" placeholder="중량을 입력하세요" ng-model="workouts.weight[$index]">
+				  		</div>
+			  			<div class="col-md-6">
+			  				<input type="text" class="form-control" placeholder="세트수를 입력하세요" ng-model="workouts.set[$index]">
+			  			</div>
+			  		</div>
+			  		<div ng-if="item == '유산소'">
+				  		<input type="text" class="form-control" placeholder="운동시간을 입력하세요" ng-model="workouts.runningTime[$index]">
+			  		</div>
+		  		</div>
+		  	</div>
+		</div>
+		<br>
+		<div class="form-group">
+			<div ng-if="workouts._id == undifined">
+	  			<button type="submit" class="btn btn-primary" id="add-button" ng-click="workouts.save(workouts.date, workouts.part, workouts.partCategory, workouts.weight, workouts.set, workouts.runningTime)">추가하기</button>
+	  		</div>
+	  		<div ng-if="workouts._id != undefined">
+	  			<button type="submit" class="btn btn-info" id="add-button" ng-click="workouts.update(workouts.date, workouts.part, workouts.partCategory, workouts.weight, workouts.set, workouts.runningTime)">수정하기</button>
+	  			<button type="submit" class="btn btn-info" id="add-button" ng-click="workouts.deselect()">취소</button>
+	  		</div>
+
+	  	</div>
+
+	</form>
+	{{item}}
+</div>
+<br>
+<div class="row">
+	<div class="col-md-12 well" ng-repeat = "daily in workouts.exercise">
+		<h4>{{daily.date}}</h4>
+		<p style="font-weight: bold">운동 부위: {{daily.part}}</p>
+		<div class="row" id="workout-well">
+		<div class="well well-sm col-md-4" ng-repeat = "(workoutName, details) in daily.name">
+			<div ng-if = "workoutName == '유산소'">
+				<p>운동 시간 : {{details["운동시간"]}}분</p>
+			</div>
+			<div ng-if = "workoutName != '유산소'">
+				<p>운동 이름: {{workoutName}}</p>
+				<p>중량 : {{details["중량"]}}kg</p>
+				<p>셋트 수 : {{details["셋트수"]}}셋트</p>
+			</div>
+		</div>
+		</div>
+		<td><button class="btn btn-danger" id="buttons" ng-click="workouts.remove(daily._id)">제거하기</button></td>
+		<td><button class="btn btn-warning" id="buttons" ng-click="workouts.edit(daily._id)">수정하기</button></td>
+	</div>
+</div>
