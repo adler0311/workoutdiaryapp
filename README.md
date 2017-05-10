@@ -1,4 +1,4 @@
-# workoutdiaryapp
+# workout diary app
 MEAN 스택을 사용하여 만든 운동 기록 일지입니다
 
 
